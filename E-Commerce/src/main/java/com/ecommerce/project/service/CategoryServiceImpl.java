@@ -18,7 +18,6 @@ public class CategoryServiceImpl implements CategoryService{
     //List no longer needed since we implement the actual H2 Database Repository
     //
     // private List<Category> categories = new ArrayList<Category>();
-    private Long idCounter = 1L;
 
     //Use @Autowired for field dependency injection
     @Autowired
@@ -26,17 +25,20 @@ public class CategoryServiceImpl implements CategoryService{
 
     @Override
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
+        if(categories.isEmpty()){
+            throw new APIException("No category created till now.");
+        }
+        return categories;
     }
 
     @Override
     public void createCategory(Category category) {
         Category savedCategory = categoryRepository.findByCategoryName(category.getCategoryName());
-
+        //If category already exit, then throw APIException
         if(savedCategory != null) {
             throw new APIException("Category with the name " + category.getCategoryName() + " already exists!");
         }
-        //category.setCategoryId(idCounter++);
         categoryRepository.save(category);
     }
 
