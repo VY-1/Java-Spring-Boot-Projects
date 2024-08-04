@@ -8,7 +8,7 @@ public class SocialProfile {
     private Long id;
 
     //add a relationship
-    @OneToOne(mappedBy = "socialProfile")
+    @OneToOne
     @JoinColumn(name = "social_user")
     private SocialUser user;
 }
