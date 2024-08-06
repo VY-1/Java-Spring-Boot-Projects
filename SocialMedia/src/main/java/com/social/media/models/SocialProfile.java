@@ -22,4 +22,12 @@ public class SocialProfile {
     private SocialUser user;
 
     private String description;
+
+    //set custom setSocialUser for bidirectional relational database upon querying social profile. for cascading
+    public void setSocialUser(SocialUser socialUser) {
+        this.user = socialUser;
+        if(user.getSocialProfile()!= this){
+            user.setSocialProfile(this);
+        }
+    }
 }
